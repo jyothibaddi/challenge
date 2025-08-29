@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Flight Readiness</title>
+
+</head>
+
+<body>
+
+  <h2>Flight Takeoff Readiness Checker</h2>
+
+
+
+  Flight ID: <input id="fid"><br><br>
+
+  Weather: 
+
+  <select id="weather">
+
+    <option value="0">Clear</option>
+
+    <option value="1">Cloudy</option>
+
+    <option value="2">Rain</option>
+
+    <option value="3">Storm</option>
+
+  </select><br><br>
+
+
+
+  <label><input type="checkbox" id="engine" checked> Engine OK</label><br>
+
+  <label><input type="checkbox" id="fuel" checked> Fuel OK</label><br>
+
+  <label><input type="checkbox" id="runway" checked> Runway Clear</label><br><br>
+
+
+
+  Pilot Hours: <input type="number" id="hours" value="8"><br><br>
+
+
+
+  <button onclick="check()">Check Readiness</button>
+
+  <p id="result">
+
+
+<script>
+
+function check(){
+
+  let score=100, r=[];
+
+  if(+weather.value==1){score-=10;r.push("Cloudy");}
+
+  if(+weather.value==2){score-=30;r.push("Rain");}
+
+  if(+weather.value==3){score-=70;r.push("Storm");}
+
+  if(!engine.checked){score-=40;r.push("Engine");}
+
+  if(!fuel.checked){score-=50;r.push("Fuel");}
+
+  if(!runway.checked){score-=50;r.push("Runway");}
+
+  if(+hours.value>=14){score-=40;r.push("Pilot Fatigue");}
+
+
+
+  let s="NOT READY";
+
+  if(score>=75) s="READY";
+
+  else if(score>=45) s="DELAY";
+
+  
+
+  result.innerHTML="Flight "+(fid.value||"Unknown")+": "+s+
+
+                   "<br>Score: "+score+"/100"+
+
+                   (r.length?"<br>Issues: "+r.join(", "):"");
+
+}
+
+</script>
+
+</body>
+
+</html>
